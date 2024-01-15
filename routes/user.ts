@@ -7,6 +7,6 @@ const router = express.Router();
 
 
 router.route('/login').post(createaccess)
-router.route('/session').post(createsession) // solve error in this route
+router.route('/session').get(createsession) // solve error in this route
 
 module.exports = router;

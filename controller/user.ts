@@ -46,8 +46,12 @@ const createaccess = async (req: Request, res: Response)=>{
                 httpOnly: true
             })
 
+            
+
                //@ts-ignore
-            res.json(user); 
+            // res.json(user); 
+
+            res.redirect('http://localhost:8080/api/session') //change the url during hosting
         }
 
         else{
@@ -73,28 +77,24 @@ const createsession = async (req: Request, res: Response )=>{
             console.log(user)
            if(user){
 
-            const token = jwt.sign( {id: "newid",},
-                
-            process.env.SECKEY,
+            const token = jwt.sign( {id: user.id,}, process.env.SECKEY,
                 {
-                    expiresIn : "1y"
+                    expiresIn : "65h"
                 }
 
             )
 
         //@ts-ignore    
-            // req.user = user;   
+            req.user = user;  
+
         
-        
-            
-        //@ts-ignore
 
             res.cookie("refreshToken", token,{
             maxAge: 345600000,
             httpOnly: true
             })
                
-               
+           res.json(token);    
         }
 
         else{

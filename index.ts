@@ -12,7 +12,8 @@ import morgan from 'morgan'
 
 //@ts-ignore
 import userrouter from './routes/user' 
-import e from 'express';
+import { access } from 'fs';
+
 
 
 const app: Express = express();
@@ -25,40 +26,86 @@ const check = async (req:Request,res: Response, next: NextFunction)=>{
 
    try {
 
-    const {refreshToken} = req.cookies
+    const {refreshToken , accessToken} = req.cookies
     if(refreshToken){
         const user = await jwt.verify(refreshToken,process.env.SECKEY);
        if(user){
-        
-           next()
+            if(accessToken){
+                res.json({message: "Logged in successfully"})
+                
+            }
+            else{
+
+                const token =   jwt.sign( {id: user.id, email: user.email},
+                    
+                
+                    process.env.SECKEY,
+                    {
+                        expiresIn : "45s"
+                    }
+
+                )
+
+                res.cookie("accessToken",token,{
+                    maxAge: 300000,
+                    httpOnly: true
+                })
+
+                res.json({message: "Logged in successfully"})
+                
+
+            }
+           
        }
   
     }
 
     else{
-        res.json({message: "Login to continue."})
-      
-        
+       
+        if(accessToken){
+
+            res.cookie("accessToken", "",{
+                maxAge: 0,
+                httpOnly: true
+            })
+            res.json({message: "Login to continue."})
+        }
+
+        else{
+            res.json({message: "Login to continue."})
+        }
     }
     
    } catch (error) {
-    res.cookie("refreshToken", "",{
-        maxAge: 0,
-        httpOnly: true
-    })
+    const {refreshToken , accessToken} = req.cookies;
 
-    res.cookie("accessToken", "",{
-        maxAge: 0,
-        httpOnly: true
-    })
-    res.json(error)
+    if(refreshToken && accessToken){
+
+        res.cookie("refreshToken", "",{
+                maxAge: 0,
+                httpOnly: true
+            })
+            
+        res.cookie("accessToken", "",{
+                    maxAge: 0,
+                    httpOnly: true
+                })
+                
+        res.status(401).json({message: "Login to continue", error})     
+
+    }
+
+    else{
+
+        res.status(401).json({message: "Login to continue", error})
+    }
+                
    }
 }
 
 
 
 app.use('/api',userrouter)
-
 
 app.get('/check',check)
 
