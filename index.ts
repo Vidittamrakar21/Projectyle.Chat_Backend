@@ -1,5 +1,8 @@
 import express, {Express, Request,Response,NextFunction} from 'express';
+import { createServer } from 'http';
+import { Server} from 'socket.io'
 import dotenv from 'dotenv';
+import cors from 'cors'
 dotenv.config()
 //@ts-ignore
 import jwt from 'jsonwebtoken'
@@ -12,16 +15,48 @@ import morgan from 'morgan'
 
 //@ts-ignore
 import userrouter from './routes/user' 
-import { access } from 'fs';
+
 
 
 
 const app: Express = express();
+const server = createServer(app);
 
 app.use(express.json());
 app.use(morgan('tiny'));
-app.use(cookieparser())
+app.use(cookieparser());
+app.use(cors)
 
+const io = new Server(server,{
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+  });
+
+io.on('connection', (socket) => {
+    console.log('a user connected', socket.id);
+    socket.on("chatstart",(msg)=>{
+        console.log(msg)
+    })
+
+    socket.on("message", ({ room, message }) => {
+        console.log({ room, message });
+        socket.to(room).emit("receive-message", message);
+      });
+
+    socket.on("status", ({ room, stat }) => {
+        console.log({ room, stat });
+        socket.to(room).emit("receive-status", stat);
+      });
+
+      socket.on("join-room", (room) => {
+        socket.join(room);
+        console.log(`User joined room ${room}`);
+      });
+}
+)
 const check = async (req:Request,res: Response, next: NextFunction)=>{
 
    try {
@@ -114,6 +149,6 @@ app.get('/',(req: Request, res: Response)=>{
     res.send("server  running")
 })
 
-app.listen(8080,()=>{
+server.listen(8080,()=>{
     console.log("server started")
 })
