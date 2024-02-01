@@ -27,6 +27,8 @@ app.use(morgan('tiny'));
 app.use(cookieparser());
 app.use(cors)
 
+let name:string;
+
 const io = new Server(server,{
     cors: {
       origin: "http://localhost:3000",
@@ -38,12 +40,12 @@ const io = new Server(server,{
 io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
     socket.on("chatstart",(msg)=>{
-        console.log(msg)
+        name = msg;
     })
 
-    socket.on("message", ({ room, message }) => {
-        console.log({ room, message });
-        socket.to(room).emit("receive-message", message);
+    socket.on("message", ({ room, mychats }) => {
+        console.log({ room, mychats });
+        socket.to(room).emit("receive-message", mychats);
       });
 
     socket.on("status", ({ room, stat }) => {
@@ -54,6 +56,7 @@ io.on('connection', (socket) => {
       socket.on("join-room", (room) => {
         socket.join(room);
         console.log(`User joined room ${room}`);
+        io.to(room).emit("user-joined",`${name} joined ${room}`)
       });
 }
 )
