@@ -29,6 +29,13 @@ app.use(cors)
 
 let name:string;
 
+const activeuser : string[] = [];
+
+const newuser = (x: string) =>{
+     const user = activeuser.concat(x)
+    return user;
+}
+
 const io = new Server(server,{
     cors: {
       origin: "http://localhost:3000",
@@ -57,7 +64,10 @@ io.on('connection', (socket) => {
         socket.join(room);
         console.log(`User joined room ${room}`);
         io.to(room).emit("user-joined",`${name} joined ${room}`)
+        io.to(room).emit("active-user",`${name}`)
       });
+
+      
 }
 )
 const check = async (req:Request,res: Response, next: NextFunction)=>{
