@@ -23,7 +23,8 @@ const createroom = async (req: Request, res: Response) =>{
     else{
         const room = await Room.create(Data);
         //@ts-ignore
-        res.status(201).json(data);
+        res.status(201).json(Data);
+        
     }
 
 

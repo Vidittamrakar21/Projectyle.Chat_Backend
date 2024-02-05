@@ -20,6 +20,12 @@ import userrouter from './routes/user'
 import roomrouter from './routes/room'
 
 
+main().catch(err => console.log(err));
+
+async function main() {
+    await mongoose.connect(`mongodb+srv://vidit:${process.env.VIDIT}@cluster0.ip74ash.mongodb.net/?retryWrites=true&w=majority`);
+    console.log("Database Connected");
+  }
 
 
 const app: Express = express();
@@ -28,10 +34,12 @@ const server = createServer(app);
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cookieparser());
-// app.use(cors)
+app.use(cors())
 
 app.use('/api',userrouter)
 app.use('/roomapi',roomrouter)
+
+
 
 
 
@@ -122,12 +130,6 @@ const check = async (req:Request,res: Response, next: NextFunction)=>{
 
 app.get('/check',check)
 
-// main().catch(err => console.log(err));
-
-// async function main() {
-//     await mongoose.connect(`mongodb+srv://vidit:${process.env.VIDIT}@cluster0.ip74ash.mongodb.net/?retryWrites=true&w=majority`);
-//     console.log("Database Connected");
-//   }
 
 let name:string;
 

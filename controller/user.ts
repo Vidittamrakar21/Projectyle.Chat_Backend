@@ -6,13 +6,35 @@ dotenv.config()
 import jwt from 'jsonwebtoken'
 //@ts-ignore
 import _ from 'lodash'
-
+import { runInNewContext } from 'vm';
+const User = require('../model/user');
 
 const userdata: Array<object> = [
     {id: "iv1",email: 'vidit.tam@gmail.com', pass: "1234"},
     {id: "ij1", email: 'junaid@gmail.com', pass: "5678"},
     
 ]
+
+const createuser = async (req: Request, res: Response)=>{
+    try {
+
+        const data = req.body;
+
+    //@ts-ignore
+    const {email, name} = data;
+
+    if(!(email && name)){
+        res.send(200).json({message: "An unexpected error occured while logging in !"})
+    }
+    else{
+        const user = await User.create(data)
+        res.status(201).json(user);
+    }
+        
+    } catch (error) {
+        res.json(error)
+    }
+}
 
 const createaccess = async (req: Request, res: Response)=>{
     try {
@@ -22,6 +44,7 @@ const createaccess = async (req: Request, res: Response)=>{
         const {email ,pass}  = req.body
 
         const user: any = _.find(userdata, {email: email })
+        
         
         if(user){
 
@@ -131,4 +154,4 @@ const createsession = async (req: Request, res: Response )=>{
 }
 
 
-module.exports = {createaccess, createsession};
+module.exports = {createaccess, createsession,createuser};
