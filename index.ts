@@ -176,8 +176,12 @@ io.on('connection', (socket) => {
         
 
         socket.on('disconnect',()=>{
+            
             io.to(room).emit("user-left",`${name} left ${room}`)
             io.to(room).emit("leeft",`${name}`)
+            io.to(room).fetchSockets()
+            
+            
         })
     
       });

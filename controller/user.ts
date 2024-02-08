@@ -27,8 +27,16 @@ const createuser = async (req: Request, res: Response)=>{
         res.send(200).json({message: "An unexpected error occured while logging in !"})
     }
     else{
-        const user = await User.create(data)
-        res.status(201).json(user);
+        const data = await User.find({email: email})
+        if(data){
+            res.status(201).json(data);
+            // console.log("user already exists")
+        }
+        else{
+            const user = await User.create(data)
+            res.status(201).json(user);
+        }
+       
     }
         
     } catch (error) {
