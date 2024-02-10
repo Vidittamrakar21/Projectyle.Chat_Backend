@@ -131,13 +131,13 @@ const check = async (req:Request,res: Response, next: NextFunction)=>{
 app.get('/check',check)
 
 
-let name:string;
+// let name:string;
 
 const activeuser : string[] = [];
 
 const newuser = (x: string) =>{
-     const user = activeuser.concat(x)
-    return user;
+     const user = activeuser.push(x)
+    
 }
 
 const io = new Server(server,{
@@ -151,7 +151,7 @@ const io = new Server(server,{
 io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
     socket.on("chatstart",(msg)=>{
-        name = msg;
+        // name = msg;
     })
 
     socket.on("message", ({ room, mychats }) => {
@@ -168,11 +168,13 @@ io.on('connection', (socket) => {
         socket.to(room).emit("my-name", name);
       })
 
-      socket.on("join-room", (room) => {
+      socket.on("join-room", ({room,name}) => {
         socket.join(room);
+        activeuser.length = 0;
+        newuser(name)
         console.log(`User joined room ${room}`);
         io.to(room).emit("user-joined",`${name} joined ${room}`)
-        io.to(room).emit("active-user",`${name}`)
+        io.to(room).emit("active-user", activeuser)
         
 
         socket.on('disconnect',()=>{

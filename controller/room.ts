@@ -23,7 +23,7 @@ const createroom = async (req: Request, res: Response) =>{
     else{
         const room = await Room.create(Data);
         //@ts-ignore
-        res.status(201).json(Data);
+        res.status(201).json(room);
         
     }
 
@@ -38,5 +38,29 @@ const createroom = async (req: Request, res: Response) =>{
 
 }
 
+const findroom = async (req: Request, res: Response) =>{
+    try {
 
-module.exports = {createroom}
+        //@ts-ignore
+    const {id} = req.body;
+
+    if(!id){
+        //@ts-ignore
+        res.status(200).json({message: "id required"})
+    }
+    else{
+        const room = await Room.findById(id)
+        //@ts-ignore
+        res.status(200).json(room);
+    }
+        
+    } catch (error) {
+        //@ts-ignore
+        res.status(200).json(error)
+    }
+    
+
+}
+
+
+module.exports = {createroom, findroom}
