@@ -133,11 +133,21 @@ app.get('/check',check)
 
 // let name:string;
 
-const activeuser : string[] = [];
+let activeuser : object[] = [];
+let luser: object[]
 
-const newuser = (x: string) =>{
-     const user = activeuser.push(x)
+const newuser = (x: string, y: string , z: string) =>{
+     const user = activeuser.push({name: x, room: y, id: z})
     
+}
+
+const leftuser = (x: string) =>{
+//@ts-ignore
+luser = activeuser.filter((item) => item["id"] === x);
+//@ts-ignore
+activeuser = activeuser.filter((item) => item["id"] !== x);
+
+
 }
 
 const io = new Server(server,{
@@ -170,18 +180,18 @@ io.on('connection', (socket) => {
 
       socket.on("join-room", ({room,name}) => {
         socket.join(room);
-        activeuser.length = 0;
-        newuser(name)
+        // activeuser.length = 0;
+        newuser(name, room, socket.id)
         console.log(`User joined room ${room}`);
         io.to(room).emit("user-joined",`${name} joined ${room}`)
         io.to(room).emit("active-user", activeuser)
         
 
         socket.on('disconnect',()=>{
-            
-            io.to(room).emit("user-left",`${name} left ${room}`)
-            io.to(room).emit("leeft",`${name}`)
-            io.to(room).fetchSockets()
+            leftuser(socket.id)
+            io.to(room).emit("user-left",luser)
+            io.to(room).emit("leeft",activeuser)
+            // io.to(room).fetchSockets()
             
             
         })
@@ -191,8 +201,6 @@ io.on('connection', (socket) => {
       
 }
 )
-
-
 
 
 
