@@ -156,14 +156,15 @@ activeuser = activeuser.filter((item) => item["id"] !== x);
 
 }
 
-// const io = new Server(server,{
-//     cors: {
-//       origin: "https://projectylechat.vercel.app",
-//       methods: ["GET", "POST"],
-//       credentials: true,
-//     },
-//   });
-const io = new Server(server);
+const io = new Server(server,{
+    cors: {
+      origin: "https://projectylechat.vercel.app",
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+  });
+  
+// const io = new Server(server);
 
 io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
