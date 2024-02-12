@@ -36,10 +36,11 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cookieparser());
 
-app.use(cors({
-    origin: 'https://projectylechat.vercel.app',
-    methods: ['GET', 'POST'], // Specify the allowed HTTP methods
-  }));
+// app.use(cors({
+//     origin: 'https://projectylechat.vercel.app',
+//     methods: ['GET', 'POST'], // Specify the allowed HTTP methods
+//   }));
+app.use(cors())
 
 app.use('/api',userrouter)
 app.use('/roomapi',roomrouter)
@@ -155,13 +156,14 @@ activeuser = activeuser.filter((item) => item["id"] !== x);
 
 }
 
-const io = new Server(server,{
-    cors: {
-      origin: "https://projectylechat.vercel.app/chat",
-      methods: ["GET", "POST"],
-      credentials: true,
-    },
-  });
+// const io = new Server(server,{
+//     cors: {
+//       origin: "https://projectylechat.vercel.app",
+//       methods: ["GET", "POST"],
+//       credentials: true,
+//     },
+//   });
+const io = new Server(server);
 
 io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
