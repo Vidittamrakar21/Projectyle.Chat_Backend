@@ -36,11 +36,11 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cookieparser());
 
-// app.use(cors({
-//     origin: 'https://projectylechat.vercel.app',
-//     methods: ['GET', 'POST'], // Specify the allowed HTTP methods
-//   }));
-app.use(cors())
+app.use(cors({
+    origin: 'https://projectylechat.vercel.app',
+    methods: ['GET', 'POST'], // Specify the allowed HTTP methods
+  }));
+// app.use(cors())
 
 app.use('/api',userrouter)
 app.use('/roomapi',roomrouter)
