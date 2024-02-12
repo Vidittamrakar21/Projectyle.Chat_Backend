@@ -1,0 +1,42 @@
+{
+    "version" : 2,
+
+    "builds": [
+        {
+            "src": "index.ts",
+            "use": "@vercel/node"
+        }
+    
+    ],
+
+    "routes": [
+        
+       
+        {
+             "src": "/api",
+            "dest": "index.ts"
+        },
+
+
+          {
+             "src": "/api/(.*)",
+            "dest": "index.ts"
+        },
+
+          {
+             "src": "/roomapi/(.*)",
+            "dest": "index.ts"
+        },
+
+    
+
+   {
+    "src": "/check",
+   "dest": "index.ts"
+}
+
+        
+          
+    
+    ]
+}
