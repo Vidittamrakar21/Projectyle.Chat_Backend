@@ -162,19 +162,20 @@ activeuser = activeuser.filter((item) => item["id"] !== x);
 
 
 
-const io = new Server(server,{
-    cors: {
-      origin: "https://projectylechat.vercel.app",
-      methods: ["GET", "POST"],
-      credentials: true,
-    },
-  });
+const io = new Server(server);
+// const io = new Server(server,{
+//     cors: {
+//       origin: "https://projectylechat.vercel.app",
+//       methods: ["GET", "POST"],
+//       credentials: true,
+//     },
+//   });
 
 
 io.on('connection', (socket) => {
 
-    socket.handshake.headers.origin = "https://projectylechat.vercel.app";
-    socket.handshake.headers['Access-Control-Allow-Origin'] = "https://projectylechat.vercel.app";
+    // socket.handshake.headers.origin = "https://projectylechat.vercel.app";
+    // socket.handshake.headers['Access-Control-Allow-Origin'] = "https://projectylechat.vercel.app";
 
     console.log('a user connected', socket.id);
     socket.on("chatstart",(msg)=>{
