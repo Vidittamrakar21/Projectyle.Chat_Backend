@@ -33,7 +33,13 @@
    {
     "src": "/check",
    "dest": "index.ts"
+},
+
+{
+    "src": "/socket.io/(.*)",
+   "dest": "index.ts"
 }
+
 
         
           
