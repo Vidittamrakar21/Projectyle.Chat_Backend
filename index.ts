@@ -40,11 +40,11 @@ app.use(cookieparser());
 //     origin: 'https://projectylechat.vercel.app',
 //     methods: ['GET', 'POST'], // Specify the allowed HTTP methods
 //   }));
-app.use(cors( {
-    origin: "https://projectylechat.vercel.app",
-    methods: ["GET", "POST"],
-    credentials: true,
-  }))
+// app.use(cors( {
+//     origin: "https://projectylechat.vercel.app",
+//     methods: ["GET", "POST"],
+//     credentials: true,
+//   }))
 
  const io = new Server(server,{
     cors: {
