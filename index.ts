@@ -37,7 +37,7 @@ app.use(morgan('tiny'));
 app.use(cookieparser());
 
 app.use(cors({
-    origin: 'https://projectylechat.vercel.app/',
+    origin: 'https://projectylechat.vercel.app',
     methods: ['GET', 'POST'], // Specify the allowed HTTP methods
   }));
 
@@ -157,7 +157,7 @@ activeuser = activeuser.filter((item) => item["id"] !== x);
 
 const io = new Server(server,{
     cors: {
-      origin: "https://projectylechat.vercel.app/",
+      origin: "https://projectylechat.vercel.app",
       methods: ["GET", "POST"],
       credentials: true,
     },
