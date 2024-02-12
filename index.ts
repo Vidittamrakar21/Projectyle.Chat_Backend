@@ -153,7 +153,7 @@ activeuser = activeuser.filter((item) => item["id"] !== x);
 
 const io = new Server(server,{
     cors: {
-      origin: "http://localhost:3000",
+      origin: "https://projectylechat.vercel.app/",
       methods: ["GET", "POST"],
       credentials: true,
     },
