@@ -48,11 +48,17 @@ app.use(cookieparser());
 
  const io = new Server(server,{
     cors: {
-      origin: "https://projectylechat.vercel.app",
-      methods: ["GET", "POST"],
-      credentials: true,
+      origin: "*",
+     
     },
   });
+//  const io = new Server(server,{
+//     cors: {
+//       origin: "https://projectylechat.vercel.app",
+//       methods: ["GET", "POST"],
+//       credentials: true,
+//     },
+//   });
 
 app.use('/api',userrouter)
 app.use('/roomapi',roomrouter)
