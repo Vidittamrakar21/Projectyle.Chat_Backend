@@ -182,8 +182,8 @@ activeuser = activeuser.filter((item) => item["id"] !== x);
 
 io.on('connection', (socket) => {
 
-    // socket.handshake.headers.origin = "https://projectylechat.vercel.app";
-    // socket.handshake.headers['Access-Control-Allow-Origin'] = "https://projectylechat.vercel.app";
+    socket.handshake.headers.origin = "https://projectylechat.vercel.app";
+    socket.handshake.headers['Access-Control-Allow-Origin'] = "https://projectylechat.vercel.app";
 
     console.log('a user connected', socket.id);
     socket.on("chatstart",(msg)=>{
