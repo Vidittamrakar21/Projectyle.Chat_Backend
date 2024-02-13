@@ -46,7 +46,7 @@ app.use(cors( {
 
  const io = new Server(server,{
     cors: {
-      origin: "https://projectylechat.vercel.app",
+      origin: "https://projectylechat.vercel.app/chat",
       methods: ["GET", "POST"],
       credentials: true,
     },
