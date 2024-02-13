@@ -51,11 +51,8 @@ app.use(cors( {
 
  const io = new Server(server,{
     cors: {
-        origin: "https://projectylechat.vercel.app",
-        methods: ["GET", "POST"],
-        //@ts-ignore
-        transports: ['websocket', 'polling'],
-        credentials: true
+        origin: "*",
+        
     },
     allowEIO3: true
   });
