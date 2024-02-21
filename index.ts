@@ -49,15 +49,15 @@ app.use(cors({
 //   }))
 
 
- const io = new Server(server);
+//  const io = new Server(server);
 
-//  const io = new Server(server,{
-//     cors: {
-//         origin: "*",
-        
-//     },
-//     allowEIO3: true
-//   });
+ const io = new Server(server,{
+    cors: {
+        origin: "*",
+        credentials: false
+    },
+    allowEIO3: true
+  });
 
 app.use('/api',userrouter)
 app.use('/roomapi',roomrouter)
