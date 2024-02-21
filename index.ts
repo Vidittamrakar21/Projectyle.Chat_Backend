@@ -37,7 +37,10 @@ app.use(morgan('tiny'));
 app.use(cookieparser());
 
 
-app.use(cors())
+app.use(cors({
+    origin: "*",
+    credentials: false
+}))
 
 // app.use(cors( {
 //     origin: "https://projectylechat.vercel.app",
