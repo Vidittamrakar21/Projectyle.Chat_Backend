@@ -37,11 +37,7 @@ app.use(morgan('tiny'));
 app.use(cookieparser());
 
 
-app.use(cors( {
-    origin: "*",
-    
-  
-  }))
+app.use(cors())
 
 // app.use(cors( {
 //     origin: "https://projectylechat.vercel.app",
@@ -50,13 +46,15 @@ app.use(cors( {
 //   }))
 
 
- const io = new Server(server,{
-    cors: {
-        origin: "*",
+ const io = new Server(server);
+
+//  const io = new Server(server,{
+//     cors: {
+//         origin: "*",
         
-    },
-    allowEIO3: true
-  });
+//     },
+//     allowEIO3: true
+//   });
 
 app.use('/api',userrouter)
 app.use('/roomapi',roomrouter)
