@@ -39,7 +39,6 @@ app.use(cookieparser());
 
 app.use(cors({
     origin: "*",
-    credentials: true
 }))
 
 // app.use(cors( {
@@ -54,7 +53,7 @@ app.use(cors({
  const io = new Server(server,{
     cors: {
         origin: "*",
-        credentials: true
+       
     },
     allowEIO3: true
   });
