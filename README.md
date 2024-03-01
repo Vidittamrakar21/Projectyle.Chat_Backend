@@ -9,6 +9,7 @@ This is a real-time chat web application built using Next.js for the frontend, N
 - **Active User Tracking:** Displays active users in the chat room.
 - **Typing Indicator:** Shows when a user is typing a message.
 - **User Leave Notification:** Notifies when a user leaves the chat room.
+- **Multiple Users in a Single Room:** Allows multiple users to chat in the same room simultaneously.
 
 ## Usage
 
