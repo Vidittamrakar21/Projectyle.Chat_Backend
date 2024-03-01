@@ -29,12 +29,18 @@ This is a real-time chat web application built using Next.js for the frontend, N
      ```bash
    npm install
 
-3. Run on your localhost (port: 8080)
+3. Setup Database
+   <br>
+    - create a cluster in  mogodb atlas
+      
+   <br>
+   
+    - setup application with providing the username and key  
+
+5. Run on your localhost (port: 8080)
    ```bash
-   npm start  
-
-
-
+   npm start
+   
 ##
 
 ### Made with ❤️ by Vidit Tamrakar
